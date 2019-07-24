@@ -1,0 +1,12 @@
+.mainWrap {
+	max-width: 1040px;
+	margin: 0 auto;
+}
+.top-menu-ul {
+	display: flex;
+	justify-content: center;
+	list-style: none;
+}
+.top-menu-ul li {
+	margin: 0 30px;
+}
