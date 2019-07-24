@@ -2,20 +2,19 @@
 session_start();
 ob_start(); // пока без этой строчки вылезает ошибка Cannot modify header information как решить это иначе я пока не знаю.
 require_once 'connection.php';
+
+//авторизуемся на сайте
 if ($_POST['submit']) {
-			$users = $connection->query("SELECT * FROM `users` ");
-			foreach ($users as $user) {
-				if ($user['login'] == $_POST['login'] && $user['password'] == $_POST['password']) {
-					$_SESSION['login'] = $_POST['login'];
-					header("location: content.php");
-				} 	
-			}
-			$out = 'Неправельный логин или пароль!';
+	if (!signInUser($_POST['login'], $_POST['password'])) {
+		$out = 'Неправельный логин или пароль!';
 	}
 
+}
+
+//регистрируемся на сайте
 if ($_POST['registr']) {
-			$users = $connection->query("SELECT * FROM `users` ");
-			foreach ($users as $user) {
+			$users = $connection->query("SELECT * FROM `users` ");//получаем массив из бд с логинами и паролями
+			foreach ($users as $user) { //проверяем есть ли такой пользователь в бд
 				if ($user['login'] == $_POST['regLogin']) {
 					$out2 = 'Такой пользователь уже существует!';
 				}
@@ -23,8 +22,9 @@ if ($_POST['registr']) {
 			if (!$out2) {
 				$regLogin = $_POST['regLogin'];
 				$regPassword = $_POST['regPassword'];
-				$connection->query("INSERT INTO `users` (`login`, `password`) VALUES ('$regLogin', '$regPassword')");
-				$out2 = 'Регистрация зваершина успешно!';
+				$connection->query("INSERT INTO `users` (`login`, `password`) VALUES ('$regLogin', '$regPassword')");//записываем нового юзера в бд
+				//header("Location: " . $_SERVER['REQUEST_URI']); //обновляем страницу сбрасывая  массив пост
+				$out2 = 'Регистрация завершина успешно!';
 			}
 			
 }

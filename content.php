@@ -1,17 +1,15 @@
 <?php
 session_start();
-if (!$_SESSION['login']) {
-		header("Location: login.php");
+if (!$_SESSION['login']) {//проверяем существует ли сессия
+		header("Location: login.php");//если нет, не пускаем
 		exit;
 	}
 if ($_POST['destr']) {
-		unset($_SESSION['login']);
+		unset($_SESSION['login']);//удаляем сессию отменяя авторизацию
 		header("Location: login.php");
 	}
 require_once 'header.php';
-	// echo "<pre>";
-	// var_dump($_SESSION);	
-	// echo "</pre>";
+
  ?>
  <p>Страница контента, только для авторизованых пользователей.</p>
 <form action="" method="post">
