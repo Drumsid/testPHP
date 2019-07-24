@@ -13,27 +13,14 @@ if ($_POST['submit']) {
 
 //регистрируемся на сайте
 if ($_POST['registr']) {
-			$users = $connection->query("SELECT * FROM `users` ");//получаем массив из бд с логинами и паролями
-			foreach ($users as $user) { //проверяем есть ли такой пользователь в бд
-				if ($user['login'] == $_POST['regLogin']) {
-					$out2 = 'Такой пользователь уже существует!';
-				}
-			}
-			if (!$out2) {
-				$regLogin = $_POST['regLogin'];
-				$regPassword = $_POST['regPassword'];
-				$connection->query("INSERT INTO `users` (`login`, `password`) VALUES ('$regLogin', '$regPassword')");//записываем нового юзера в бд
-				//header("Location: " . $_SERVER['REQUEST_URI']); //обновляем страницу сбрасывая  массив пост
-				$out2 = 'Регистрация завершина успешно!';
-			}
-			
+	$out2 = signUpNewUser($_POST['regLogin'], $_POST['regPassword']);			
 }
 
 	require_once 'header.php';
 ?>
-<p>Форма авторизации.</p>
+<p class=" <?php echo $_SESSION['login'] ? 'hiddenform' : ''?>">Форма авторизации.</p>
 <?= $out; ?>
-<div class="wrap-form">
+<div class="wrap-form <?php echo $_SESSION['login'] ? 'hiddenform' : ''?>">
 	<form action="" method="post">
 		<input type="text" name="login" required>
 		<input type="text" name = "password" required>

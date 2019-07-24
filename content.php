@@ -1,13 +1,18 @@
 <?php
-session_start();
-if (!$_SESSION['login']) {//проверяем существует ли сессия
+session_start();//до сюда функции добавил дальше уже на свежую голову надо еще покумекать
+
+//проверяем существует ли сессия
+if (!$_SESSION['login']) {
 		header("Location: login.php");//если нет, не пускаем
 		exit;
 	}
+	
+//удаляем сессию отменяя авторизацию
 if ($_POST['destr']) {
-		unset($_SESSION['login']);//удаляем сессию отменяя авторизацию
+		unset($_SESSION['login']);
 		header("Location: login.php");
 	}
+
 require_once 'header.php';
 
  ?>
