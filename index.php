@@ -1,5 +1,6 @@
 <?php
-$connection = new PDO("mysql:host=localhost; dbname=testlogin; charset=utf8;", 'root', '');
+ob_start();// пока без этой строчки вылезает ошибка Cannot modify header information как решить это иначе я пока не знаю.
+require_once 'connection.php';
 if ($_POST['comment']) {
 	$newComment = $_POST['comment'];
 	$connection->query("INSERT INTO `comments` (`comment`) VALUES ('$newComment');");
@@ -12,6 +13,7 @@ if ($_GET['del']) {
 $allComments = $connection->query("SELECT * FROM comments ORDER BY comment DESC");
 ?>
 <?php require_once 'header.php';?>
+<p>Оставить комментарий.</p>
 <form action="" method="post">
 	<input type="text" name = "comment" required>
 	<input type="submit">
@@ -22,4 +24,4 @@ $allComments = $connection->query("SELECT * FROM comments ORDER BY comment DESC"
 			 echo "<p><a href='http://testlogin/index.php?del={$comment['id']}'>удалить</a></p><p>" . $comment['comment'] . "</p><hr>";
 		}
 	 ?>
-<?php require_once 'footer.php' ?>
+<?php require_once 'footer.php'; ?>

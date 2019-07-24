@@ -9,12 +9,14 @@ if ($_POST['destr']) {
 		header("Location: login.php");
 	}
 require_once 'header.php';
-	echo "<pre>";
-	var_dump($_SESSION);	
-	echo "</pre>";
+	// echo "<pre>";
+	// var_dump($_SESSION);	
+	// echo "</pre>";
  ?>
+ <p>Страница контента, только для авторизованых пользователей.</p>
 <form action="" method="post">
-	<input type="submit" name="destr">
+	<p>Сбросить авторизацию</p>
+	<input type="submit" name="destr" value="удалить SESSION">
 </form>
 
 <?php require_once 'footer.php'; ?>
